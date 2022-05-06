@@ -17,6 +17,7 @@ const server = app.listen(port, host, (err) => {
     welcome to my trash code :) 
 */
 app.get("/:sh", (req, res, next) => {
+    console.log(`Request from:  ${req.ip}`);
 
     var [host, port] = req.params.sh.toString().split(':')
 
