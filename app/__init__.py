@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 from flask import Flask, make_response, Response
 from string import Template
 from pathlib import Path
@@ -42,4 +43,4 @@ def main(ip:str, port:str) -> Response:
 
 
 if __name__ == "__main__":
-    app.run(port=8000,host='0.0.0.0')
+    app.run(port=8000, host='0.0.0.0')

